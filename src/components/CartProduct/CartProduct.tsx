@@ -6,6 +6,7 @@ interface CartProductProps {
   title: string;
   image: string;
   price: number;
+  quantity: number;
 }
 
 export const CartProduct: FC<CartProductProps> = ({
@@ -13,6 +14,7 @@ export const CartProduct: FC<CartProductProps> = ({
   image,
   price,
   title,
+  quantity
 }) => {
   const { removeFromCart } = useCart();
   return (
@@ -20,11 +22,12 @@ export const CartProduct: FC<CartProductProps> = ({
       <img src={image} className="w-[90px]" />
       <div className="flex flex-col justify-between">
         <span className="flex flex-row gap-2">
-          <h3>{title}</h3>
+          <h3 className="">{title}</h3>
           <i className="pi pi-times" onClick={() => removeFromCart(id)}></i>
         </span>
-        <span className="flex justify-end">
-          <p>${price}</p>
+        <span className="flex justify-between">
+          <p>Qty: {quantity}</p>
+          <p>${(price * quantity)}</p>
         </span>
       </div>
     </div>

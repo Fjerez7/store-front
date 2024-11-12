@@ -5,7 +5,15 @@ import useProducts from "../hooks/useProducts";
 import { Product as typeProduct } from "../types/Products";
 
 const ViewProducts = () => {
-  const { data } = useProducts();
+  const { data, isLoading } = useProducts();
+  
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen text-5xl">
+        Loading...
+      </div>
+    );
+    
   return (
     <LayoutPage>
       <div>
@@ -16,7 +24,7 @@ const ViewProducts = () => {
               <NavLink key={i} to={`/products/product/${product.id}`}>
                 <Product
                   key={i}
-                  image={product.images[1]}
+                  image={product.image}
                   title={product.title}
                   price={`$${product.price}`}
                 />

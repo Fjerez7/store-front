@@ -18,7 +18,7 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           <NavLink to={"/products"} className="text-2xl">
             Products
           </NavLink>
-          <NavLink to={"/"} className="text-2xl">
+          <NavLink to={"/cart"} className="text-2xl">
             Cart
           </NavLink>
         </div>

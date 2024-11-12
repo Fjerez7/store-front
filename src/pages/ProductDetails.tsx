@@ -9,7 +9,7 @@ import { Cart } from "../components/Cart/Cart";
 
 const fetchProduct = async (id: number) => {
   const response = await fetch(
-    `https://api.escuelajs.co/api/v1/products/${id}`
+    `https://fakestoreapi.com/products/${id}`
   );
   if (!response.ok) throw new Error("Error, no hay productos");
   return response.json();
@@ -36,13 +36,14 @@ const ProductDetails = () => {
   return (
     <LayoutPage>
       <div className="flex gap-10">
-        <img className="" src={data?.images[1]} alt={data?.title} />
-        <div>
-          <h1 className="text-4xl">{data?.title}</h1>
-          <p className="text-2xl">Price: ${data?.price}</p>
+        <img className="w-[800px] h-[700px] object-contain" src={data?.image} alt={data?.title} />
+        <div className="w-[500px]">
+          <h1 className="text-4xl font-bold">{data?.title}</h1>
+          <p className="text-2xl my-[10px]">Price: ${data?.price}</p>
+          <p>{data?.description}</p>
           <Button
             label="Add to cart"
-            className="bg-[#ffcc03] w-full p-[10px] mt-[50px]"
+            className="bg-[#ffcc03] w-full p-[10px] mt-[30px]"
             onClick={() => {
               setOpenCart(true);
               addToCart(data);

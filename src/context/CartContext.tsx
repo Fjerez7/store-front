@@ -1,6 +1,8 @@
 import { createContext, FC, ReactNode, useState } from "react";
-import { CartContextType } from "../types/Cart";
+import { CartContextType, CartItem } from "../types/Cart";
 import { Product } from "../types/Products";
+
+
 
 export const CartContext = createContext<CartContextType>({
   cartItems: [],
@@ -14,19 +16,31 @@ interface CartProviderProps {
 }
 
 export const CartProvider: FC<CartProviderProps> = ({ children }) => {
-  const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const removeFromCart = (productId: number) => {
     setCartItems((prevItems) =>
-      prevItems.filter((item) => item.id !== productId)
+      prevItems.filter((item) => item.product.id !== productId)
     );
   };
 
   const addToCart = (product: Product) => {
-    setCartItems((prevItems) => [...prevItems, product]);
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find((item) => item.product.id === product.id);
+      
+      if (existingItem) {
+        return prevItems.map((item) =>
+          item.product.id === product.id 
+          ? { ...item, quantity: item.quantity + 1 } 
+          : item
+        );
+      } else {
+        return [...prevItems, { product, quantity: 1 }];
+      }
+    });
   };
 
-  const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
+  const totalAmount = cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
 
   return (
     <CartContext.Provider
